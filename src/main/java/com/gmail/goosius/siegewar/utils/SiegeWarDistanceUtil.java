@@ -87,21 +87,6 @@ public class SiegeWarDistanceUtil {
 		return false;
 	}
 
-	/**
-	 * This method returns true if the given location is in an active SiegeCamp or
-	 * SiegeAssembly (which are two names for the same feature.)
-	 *
-	 * @param location the target location
-	 * @return true is location is in an active SiegeAssembly
-	 */
-	public static boolean isLocationInActiveSiegeAssembly(Location location) {
-		for(SiegeCamp siegeCamp: SiegeController.getSiegeCamps()) {
-			if(SiegeWarDistanceUtil.isInSiegeCampZone(location, siegeCamp)) {
-				return true;
-			}
-		}
-		return false;
-	}
 	public static boolean isTownBlockInActiveSiegeZone(TownBlock townBlock) {
 		//Transform worldcoord to Location object
 		World world = Bukkit.getWorld(townBlock.getWorld().getName());
@@ -302,5 +287,14 @@ public class SiegeWarDistanceUtil {
 
 	public static boolean isTownTooFarFromNationCapitalByWorld(Nation nation, Town town) throws TownyException {
 		return TownySettings.getNationRequiresProximity() > 0 && !nation.getCapital().getHomeBlock().getWorld().getName().equals(town.getHomeBlock().getWorld().getName());
+	}
+
+	public static boolean isInANonBesiegedTown(Location location) {
+		Town town = TownyAPI.getInstance().getTown(location);
+		if(town != null & !SiegeController.hasActiveSiege(town)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

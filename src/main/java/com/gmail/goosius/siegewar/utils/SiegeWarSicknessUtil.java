@@ -35,9 +35,8 @@ public class SiegeWarSicknessUtil {
      * - Unofficial Siege-Participant effects
      */
     public static void evaluateWarSickness() {
-        boolean neutralTownsEnabled = SiegeWarSettings.getWarCommonPeacefulTownsEnabled();
         boolean nonOfficialLimiterEnabled = SiegeWarSettings.getPunishingNonSiegeParticipantsInSiegeZone();
-        
+
         for (Player player : Bukkit.getOnlinePlayers()) {
             Location location = player.getLocation();
 
@@ -54,27 +53,13 @@ public class SiegeWarSicknessUtil {
             if (resident == null)
                 continue;
 
-            if(neutralTownsEnabled && resident.hasTown() && resident.getTownOrNull().isNeutral()) {
-
-                //Give war sickness to neutral town residents in Siege-Zones
-                if (isInOwnClaims(resident)) {
-                    givePlayerSpecialWarSicknessNow(player);
-                } else {
-                    givePlayerFullWarSicknessWithWarning(
-                        player,
-                        resident,
-                        siege,
-                        SiegeWarSettings.getPeacefulTownsSicknessWarningDurationSeconds(),
-                        Translatable.of("msg_war_siege_peaceful_player_warned_for_being_in_siegezone"),
-                        Translatable.of("msg_war_siege_peaceful_player_punished_for_being_in_siegezone"));
-                }
-
-            } else if (nonOfficialLimiterEnabled && !isSiegeParticipant(player, resident, siege)) {
-
+            if (nonOfficialLimiterEnabled && !isSiegeParticipant(player, resident, siege)) {
                 //Give war sickness to players who are not official participants in the SiegeZone
-                if (isInOwnClaims(resident)) {
+                if (SiegeWarDistanceUtil.isInANonBesiegedTown(location)) {
+                    //Special war sickness
                     givePlayerSpecialWarSicknessNow(player);
                 } else {
+                    //Full war sickness
                     int warningDurationInSeconds = SiegeWarSettings.getNonResidentSicknessWarningTimeSeconds();
                     givePlayerFullWarSicknessWithWarning(
                         player,
