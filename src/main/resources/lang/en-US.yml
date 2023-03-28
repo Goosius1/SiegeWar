@@ -550,7 +550,7 @@ msg_war_common_town_declared_non_peaceful: '&bNon-Peacefulness Declared!. The to
 msg_town_became_peaceful: '&b%s has been confirmed as Peaceful. The town is now immune to siege attacks, but vulnerable to getting subverted by nearby nations. Residents cannot gain nation-military ranks.'
 msg_town_became_non_peaceful: '&b%s has been confirmed as Non-Peaceful. The town is no longer immune to siege attacks, and no longer vulnerable to getting subverted by nearby nations. Residents can now gain nation-military ranks.'
 msg_war_common_town_peacefulness_countdown_cancelled: '&bThe Peaceful status change countdown was cancelled.'
-msg_war_siege_cannot_add_nation_military_rank_to_peaceful_resident: '&cUnable to add nation military rank to resident, because they are in a Peaceful town.'
+msg_war_siege_cannot_add_nation_military_rank_to_peaceful_resident: '&cUnable to add nation military rank to resident, because they belong to a Peaceful town.'
 #Nation Peacefulness
 msg_err_nation_peacefulness_not_supported: '&cSiegeWar does not support nation peacefulness.'
 #Peaceful towns homeblock move restrictions
