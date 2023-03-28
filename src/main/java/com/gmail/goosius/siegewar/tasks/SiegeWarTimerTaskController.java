@@ -74,12 +74,6 @@ public class SiegeWarTimerTaskController {
 			SiegeWarBannerControlUtil.evaluateBannerControl(siege);
 		}
 	}
-	
-	public static void evaluateWallBreaching() {
-		if(SiegeWarSettings.isWallBreachingEnabled()) {
-			SiegeWarWallBreachUtil.evaluateWallBreaching();
-		}
-	}
 
 	public static void evaluateBattleSessions() {
 		SiegeWarBattleSessionUtil.evaluateBattleSessions();
