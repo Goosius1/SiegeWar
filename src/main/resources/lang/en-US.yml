@@ -262,7 +262,6 @@ status_town_siege_status_pending_attacker_abandon: 'Attacker Abandon Pending, in
 status_town_siege_status_defender_surrender: 'Defender Surrender'
 status_town_siege_status_pending_defender_surrender: 'Defender Surrender Pending, in %s'
 status_town_siege_status_plundered: '&2 > Town Plundered: %s'
-status_town_siege_status_invaded: '   &2Town Invaded: %s'
 
 # Siege statuses
 siege_status_attacker_abandon: 'Attacker Abandon'
@@ -282,17 +281,8 @@ msg_err_town_cannot_end_siege_as_finished: '&cThe siege is finished or scheduled
 msg_pending_attacker_victory: " Attacker victory will be confirmed in %s."
 msg_pending_defender_victory: " Defender victory will be confirmed in %s."
 
-# Invasions
-msg_err_cannot_invade_own_town: '&cYou cannot invade your own town.'
-msg_err_cannot_invade_without_victory: "&cYou cannot invade the town unless your nation is victorious in the siege."
-msg_err_cannot_invade_siege_still_in_progress: '&cYou cannot invade while the siege is still in progress.'
-msg_err_cannot_invade_town_already_occupied: '&cThere is no need to invade because your nation already occupies the town.'
-
 # Plunder
 msg_err_siege_war_plunder_not_possible_rebels_won: '&cPlunder not possible because the town rebels won the siege.'
-
-# Admin commands
-msg_swa_set_invade_success: '&bSet invaded to %s for %s.'
 
 # Added in 0.16
 
@@ -389,7 +379,6 @@ msg_next_session_cannot_be_determined: "The next Siege Session has not been sche
 #Added in 0.32
 msg_town_became_peaceful: '&b%s has been confirmed as Neutral. The town is now immune to siege attacks, but vulnerable to getting subverted by nearby nations. Residents cannot enter siege-zones or gain nation-military ranks.'
 msg_town_became_non_peaceful: '&b%s has been confirmed as Not-Neutral. The town is no longer immune to siege attacks, and no longer vulnerable to getting subverted by nearby nations. Residents can enter siege-zones and gain nation-military ranks.'
-msg_err_cannot_subvert_towns_in_own_nation: "&cYou cannot subvert towns which are in your own nation."
 msg_err_cannot_subvert_town_zero_influence: "&cYou cannot subvert this town, because your nation has no Towny-Influence in the local area."
 msg_err_cannot_subvert_town_insufficient_influence: "&cYou cannot subvert this town, because %s has more Towny-Influence in the local area (%d), than your nation (%d)."
 
@@ -573,11 +562,11 @@ msg_peaceful_occupation_taxes_paid_totaling: "Your nation received a peaceful oc
 #Added/Updated in 0.51
 #Invasion
 msg_err_cannot_invade_town_already_invaded: '&cYour nation has already captured the town.'
-msg_neutral_town_invaded: '&b%s has been invaded and captured by %s!'
-msg_nation_town_invaded: '&b%s, belonging to %s, has been invaded and captured by %s!'
+msg_neutral_town_invaded: '&b%s has been captured by %s!'
+msg_nation_town_invaded: '&b%s, belonging to %s, has been captured by %s!'
 #Subverting
 msg_peaceful_town_subverted: "&b%s has been peacefully subverted and captured by %s."
-msg_err_cannot_subvert_town_already_occupied: "&cThere is no need to subvert this town, because your nation already owns it."
+msg_err_cannot_subvert_town_already_occupied: "&cThere is no need to subvert this town, because your nation already owns and occupies it."
 # Timed wins
 msg_conquest_siege_timed_attacker_win: '&bCONQUEST SIEGE at %s > The attacking army of %s has defeated the defending army of %s!.'
 msg_revolt_siege_timed_attacker_win: '&bREVOLT SIEGE at %s > The rebellion has succeeded!. The attacking rebels have successfully driven off the defending army of %s, which previously occupied the town.'
@@ -605,3 +594,10 @@ msg_siege_war_nation_refund_claimed: "You have claimed the nation refund of %s."
 msg_err_siege_war_nation_refund_unavailable: "There is no nation refund available to you."
 #swa
 msg_err_command_not_allowed_on_active_siege: "You cannot run this command unless the siege has ended"
+msg_swa_set_invade_success: '&bSet captured to %s for %s.'
+#Town Screen
+status_town_siege_status_invaded: '   &2Town Captured: %s'
+#Capture
+msg_err_cannot_invade_without_victory: "&cYou cannot capture this town unless your nation is victorious in the siege."
+msg_err_cannot_invade_siege_still_in_progress: '&cYou cannot capture this town while the siege is still in progress.'
+msg_err_cannot_invade_town_already_occupied: '&cThere is no need to capture this town, because your nation already owns and occupies it.'
