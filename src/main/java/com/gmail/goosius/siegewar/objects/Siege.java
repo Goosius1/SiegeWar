@@ -53,7 +53,6 @@ public class Siege {
 	private Map<Player, BannerControlSession> bannerControlSessions;
 	private int attackerBattlePoints;
 	private int defenderBattlePoints;
-	private Map<UUID, Integer> primaryTownGovernments; //UUID:numBattleSessions map of governments who led the town during the siege. If town was is a nation, nation UUID will be used, otherwise town UUID will be used
 	private double wallBreachPoints;	//Wall Breach points for the current battle session
 	private Set<Resident> wallBreachBonusAwardees;  //Residents who have been awarded the wall-breach bonus for the current battle session
 	private Set<Player> recentTownFriendlyCannonFirers;
@@ -77,7 +76,6 @@ public class Siege {
 		bannerControlSessions = new HashMap<>();
 		attackerBattlePoints = 0;
 		defenderBattlePoints = 0;
-		primaryTownGovernments = new HashMap<>();
 		wallBreachPoints = 0;
 		wallBreachBonusAwardees = new HashSet<>();
 		recentTownFriendlyCannonFirers = new HashSet<>();
@@ -406,47 +404,6 @@ public class Siege {
 	public boolean isRevoltSiege() {
 		return siegeType == SiegeType.REVOLT;
 	}
-
-	/**
-	 * Record who is the primary government of the town
-	 * If the town has a nation, nation uuid will be recorded,
-	 * otherwise town uuid will be recorded.
-	 */
-	public void recordPrimaryTownGovernment() {
-		//Identify key
-		UUID governmentUUID;
-		if(town.hasNation())
-			governmentUUID = TownyAPI.getInstance().getTownNationOrNull(town).getUUID();
-		else
-			governmentUUID = town.getUUID();
-
-		//Record battle session contribution
-		if(primaryTownGovernments.containsKey(governmentUUID)) {
-			int numBattleSessions = primaryTownGovernments.get(governmentUUID);
-			numBattleSessions++;
-			primaryTownGovernments.put(governmentUUID, numBattleSessions);
-		} else {
-			primaryTownGovernments.put(governmentUUID, 1);
-		}
-	}
-
-	public Map<UUID, Integer> getPrimaryTownGovernments() {
-		return primaryTownGovernments;
-	}
-
-	public void setPrimaryTownGovernments(Map<UUID, Integer> primaryTownGovernments) {
-		this.primaryTownGovernments = primaryTownGovernments;
-	}
-
-
-	public int getTotalBattleSessions() {
-		int result = 0;
-		for(int homeNationContribution: primaryTownGovernments.values()) {
-			result += homeNationContribution;
-		}
-		return result;
-	}
-
 	public SiegeSide getSiegeWinner() {
 		return siegeWinner;
 	}
