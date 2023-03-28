@@ -602,3 +602,5 @@ nation_help_refund : "Claim any nation refund which is available to you."
 msg_siege_war_nation_refund_available: "A nation refund of %s is now available to you. It can be claimed using '/sw nation claimrefund'"
 msg_siege_war_nation_refund_claimed: "You have claimed the nation refund of %s."
 msg_err_siege_war_nation_refund_unavailable: "There is no nation refund available to you."
+#swa
+msg_err_command_not_allowed_on_active_siege: "You cannot run this command unless the siege has ended"

@@ -639,14 +639,14 @@ public class SiegeWarAdminCommand implements TabExecutor {
 				Messaging.sendErrorMsg(sender, Translatable.of("msg_err_town_not_registered", args[0]));
 				return;
 			}
-			List<String> ignoreActiveSiegeArgs = Arrays.asList("setplundered","setcaptured","remove");
-			if (!SiegeController.hasActiveSiege(town) && !ignoreActiveSiegeArgs.contains(args[1].toLowerCase())) {
-				Messaging.sendErrorMsg(sender, Translatable.of("msg_err_not_being_sieged", town.getName()));
+			if (!SiegeController.hasSiege(town)) {
+				Messaging.sendErrorMsg(sender, Translatable.of("msg_err_siege_war_no_siege_on_target_town", town.getName()));
 				return;
 			}
-			if (!SiegeController.hasSiege(town) && ignoreActiveSiegeArgs.contains(args[1].toLowerCase())) {
-				Messaging.sendErrorMsg(sender, Translatable.of("msg_err_not_being_sieged", town.getName()));
-				return;				
+			List<String> commandsNotAllowedOnActiveSieges = Arrays.asList("setplundered","setinvaded");
+			if (SiegeController.hasActiveSiege(town) && !commandsNotAllowedOnActiveSieges.contains(args[1].toLowerCase())) {
+				Messaging.sendErrorMsg(sender, Translatable.of("msg_err_command_not_allowed_on_active_siege", town.getName()));
+				return;
 			}
 			Siege siege = SiegeController.getSiege(town);
 
