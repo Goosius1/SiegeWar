@@ -4,6 +4,7 @@ import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.palmergames.bukkit.towny.object.Translatable;
+import com.palmergames.bukkit.towny.object.Translation;
 
 /**
  * This class is responsible for processing timed attacker wins
@@ -18,25 +19,25 @@ public class AttackerTimedWin {
         AttackerWin.attackerWin(siege, SiegeStatus.ATTACKER_WIN);
     }
 
-    private static Translatable[] getTimedAttackerWinMessage(Siege siege) {
+    private static String getTimedAttackerWinMessage(Siege siege) {
         String key = String.format("msg_%s_siege_timed_attacker_win", siege.getSiegeType().toString().toLowerCase());
-        Translatable[] message = new Translatable[2];
+        String message = "";
         switch (siege.getSiegeType()) {
             case CONQUEST:
-                message[0] = Translatable.of(key,
+                message = Translation.of(key,
                         siege.getTown().getName(),
                         siege.getAttacker().getName(),
                         siege.getDefendingNationIfPossibleElseTown().getName());
                 break;
             case REVOLT:
-                message[0] = Translatable.of(key,
+                message = Translation.of(key,
                         siege.getTown().getName(),
                         siege.getDefender().getName());
                 break;
         }
 
         String key2 = String.format("msg_%s_siege_attacker_win_result", siege.getSiegeType().toString().toLowerCase());
-        message[1] =Translatable.of(key2);
+        message += Translation.of(key2);
 
         return message;
     }
