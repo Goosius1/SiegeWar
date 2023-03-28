@@ -53,7 +53,7 @@ public class SiegeWarSicknessUtil {
             if (resident == null)
                 continue;
 
-            if (nonOfficialLimiterEnabled && !isSiegeParticipant(player, resident, siege)) {
+            if (nonOfficialLimiterEnabled && !isOfficialSiegeParticipant(player, resident, siege)) {
                 //Give war sickness to players who are not official participants in the SiegeZone
                 if (SiegeWarDistanceUtil.isInANonBesiegedTown(location)) {
                     //Special war sickness
@@ -101,12 +101,12 @@ public class SiegeWarSicknessUtil {
 
         Towny.getPlugin().getServer().getScheduler().runTaskLater(Towny.getPlugin(), () -> {
             if (SiegeWarDistanceUtil.isInSiegeZone(player, siege)) {
-                if (isInOwnClaims(resident)) {
-                    //In own claims
+                if (SiegeWarDistanceUtil.isInANonBesiegedTown(player.getLocation())) {
+                    //Special War Sickness
                     givePlayerSpecialWarSicknessNow(player);
                     playersWithFullWarSickness.remove(player);
                 } else {
-			        //Still in forbidden siege zone area
+			        //Full war sickness
                     Messaging.sendMsg(player, punishmentTranslatable);
                     givePlayerFullWarSicknessNow(player);
                 }
@@ -145,7 +145,7 @@ public class SiegeWarSicknessUtil {
         });
     }
 
-    public static boolean isSiegeParticipant(Player player, Resident resident, Siege siege) {
+    public static boolean isOfficialSiegeParticipant(Player player, Resident resident, Siege siege) {
         if (!resident.hasTown())
             return false;
 
@@ -154,14 +154,4 @@ public class SiegeWarSicknessUtil {
         return siegeSide != SiegeSide.NOBODY;
     }
 
-    private static boolean isInOwnClaims(Resident resident) {
-        Location location = resident.getPlayer().getLocation();
-        if (!resident.hasTown())
-            return false;
-
-        if (TownyAPI.getInstance().isWilderness(location))
-            return false;
-
-        return TownyAPI.getInstance().getTown(location).equals(TownyAPI.getInstance().getResidentTownOrNull(resident));
-    }
 }
