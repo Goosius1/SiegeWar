@@ -34,7 +34,10 @@ public class AttackerTimedWin {
                         siege.getDefender().getName());
                 break;
         }
-        message[1] = Translatable.of("msg_immediate_attacker_victory");
+
+        String key2 = String.format("msg_%s_siege_attacker_win_result", siege.getSiegeType().toString().toLowerCase());
+        message[1] =Translatable.of(key2);
+
         return message;
     }
 }
