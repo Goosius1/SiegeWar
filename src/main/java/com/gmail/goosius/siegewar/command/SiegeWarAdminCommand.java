@@ -644,7 +644,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 				return;
 			}
 			List<String> commandsNotAllowedOnActiveSieges = Arrays.asList("setplundered","setinvaded");
-			if (SiegeController.hasActiveSiege(town) && !commandsNotAllowedOnActiveSieges.contains(args[1].toLowerCase())) {
+			if (SiegeController.hasActiveSiege(town) && commandsNotAllowedOnActiveSieges.contains(args[1].toLowerCase())) {
 				Messaging.sendErrorMsg(sender, Translatable.of("msg_err_command_not_allowed_on_active_siege", town.getName()));
 				return;
 			}
