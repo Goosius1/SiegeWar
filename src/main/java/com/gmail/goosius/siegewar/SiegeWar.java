@@ -253,7 +253,7 @@ public class SiegeWar extends JavaPlugin {
 	 */
 	private void cleanupLegacyMetaData() {
 		for(Resident resident: TownyUniverse.getInstance().getResidents()) {
-			ResidentMetaDataController.clearPlunder(resident);
+			ResidentMetaDataController.removeLegacyFields(resident);
 		}
 	}
 
