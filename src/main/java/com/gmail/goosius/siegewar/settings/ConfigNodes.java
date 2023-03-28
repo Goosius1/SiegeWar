@@ -256,8 +256,8 @@ public enum ConfigNodes {
             "############################################################",
             ""),
 	WAR_SIEGE_SIEGECAMPS_ENABLED(
-			"war.siege.siege_assemblies.enabled",
-			"true",
+			"war.siege.siege_assemblies.assemblies_enabled",
+			"false",
 			"",
 			"# When true, SiegeWar will begin each attempted Siege with a Siege-Assembly."),
 	WAR_SIEGE_SIEGECAMPS_COOLDOWN(
@@ -960,7 +960,7 @@ public enum ConfigNodes {
 			"battle_session_scheduler.start_times.friday",
 			""),
 	BATTLE_SESSION_SCHEDULER_DURATION_MINUTES(
-			"battle_session_scheduler.duration_minutes",
+			"battle_session_scheduler.session_duration_minutes",
 			"60",
 			"",
 			"# This value determines the duration in minutes of each battle session.",
