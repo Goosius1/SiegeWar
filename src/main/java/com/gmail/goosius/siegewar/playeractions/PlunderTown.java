@@ -53,6 +53,9 @@ public class PlunderTown {
 		if (resident == null)
 			throw new TownyException(translator.of("msg_err_not_registered_1", player.getName()));
 
+		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_PLUNDER.getNode()))
+			throw new TownyException(translator.of("msg_err_cannot_plunder_not_enough_permissions"));
+
 		if(!TownyEconomyHandler.isActive())
 			throw new TownyException(translator.of("msg_err_siege_war_cannot_plunder_without_economy"));
 
@@ -68,9 +71,6 @@ public class PlunderTown {
 		// Ensure the attacking nation has completed the win
 		if(siege.getStatus() != SiegeStatus.ATTACKER_WIN && siege.getStatus() != SiegeStatus.DEFENDER_SURRENDER)
 			throw new TownyException(translator.of("msg_err_siege_war_cannot_plunder_without_victory"));
-
-		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_PLUNDER.getNode()))
-			throw new TownyException(translator.of("msg_err_cannot_plunder_not_enough_permissions"));
 
 		Nation plunderingNation = resident.getNationOrNull(); //Must be in a nation, due to above perm check
 
