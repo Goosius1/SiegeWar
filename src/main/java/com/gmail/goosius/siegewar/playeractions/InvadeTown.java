@@ -103,17 +103,14 @@ public class InvadeTown {
 	private static void allowInvasionOrThrow(Player player, Nation residentsNation, Town targetTown, Siege siege) throws TownyException {
 		final Translator translator = Translator.locale(player);
 
-		if(!SiegeWarSettings.getWarSiegeInvadeEnabled())
-			throw new TownyException(translator.of("msg_err_action_disable"));
-
-		if(siege.getStatus().isActive())
-			throw new TownyException(translator.of("msg_err_cannot_invade_siege_still_in_progress"));
-
 		if(residentsNation == null)
 			throw new TownyException(translator.of("msg_err_cannot_invade_not_enough_permissions"));
 
 		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_INVADE.getNode()))
 			throw new TownyException(translator.of("msg_err_cannot_invade_not_enough_permissions"));
+
+		if(siege.getStatus().isActive())
+			throw new TownyException(translator.of("msg_err_cannot_invade_siege_still_in_progress"));
 
 		if(SiegeWarTownOccupationUtil.isTownOccupiedByNation(residentsNation, targetTown))
 			throw new TownyException(translator.of("msg_err_cannot_invade_town_already_occupied"));
