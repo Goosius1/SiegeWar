@@ -20,6 +20,7 @@ import com.palmergames.bukkit.towny.object.Translator;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * This class is responsible for processing requests to invade towns
@@ -35,7 +36,7 @@ public class InvadeTown {
 	 * @param siege the siege of the town.
 	 * @throws TownyException when the invasion won't be allowed.
 	 */
-	public static void processInvadeTownRequest(Player player, Nation residentsNation, Town targetTown, Siege siege) throws TownyException {
+	public static void processInvadeTownRequest(Player player, @Nullable Nation residentsNation, Town targetTown, Siege siege) throws TownyException {
 		
 		// Throw an exception if this is not an allowable invasion.
 		allowInvasionOrThrow(player, residentsNation, targetTown, siege);
@@ -101,17 +102,18 @@ public class InvadeTown {
 
 	private static void allowInvasionOrThrow(Player player, Nation residentsNation, Town targetTown, Siege siege) throws TownyException {
 		final Translator translator = Translator.locale(player);
+
 		if(!SiegeWarSettings.getWarSiegeInvadeEnabled())
 			throw new TownyException(translator.of("msg_err_action_disable"));
 
-		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_INVADE.getNode()))
-			throw new TownyException(translator.of("msg_err_action_disable"));
-
-		if(residentsNation == null)
-			throw new TownyException(translator.of("msg_err_action_disable"));  //Can't invade if nationless
-
 		if(siege.getStatus().isActive())
 			throw new TownyException(translator.of("msg_err_cannot_invade_siege_still_in_progress"));
+
+		if(residentsNation == null)
+			throw new TownyException(translator.of("msg_err_cannot_invade_not_enough_permissions"));
+
+		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_INVADE.getNode()))
+			throw new TownyException(translator.of("msg_err_cannot_invade_not_enough_permissions"));
 
 		if(SiegeWarTownOccupationUtil.isTownOccupiedByNation(residentsNation, targetTown))
 			throw new TownyException(translator.of("msg_err_cannot_invade_town_already_occupied"));

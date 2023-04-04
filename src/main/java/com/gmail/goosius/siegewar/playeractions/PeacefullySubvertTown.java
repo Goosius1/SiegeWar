@@ -18,6 +18,7 @@ import com.palmergames.bukkit.towny.object.Translator;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
@@ -39,7 +40,7 @@ public class PeacefullySubvertTown {
 	 *
 	 * @throws TownyException if subvert is not allowed
 	 */
-	public static void processActionRequest(Player player, Nation residentsNation, Town targetTown) throws TownyException {
+	public static void processActionRequest(Player player, @Nullable Nation residentsNation, Town targetTown) throws TownyException {
 		// Throws an exception if the peaceful subversion of this town would not be allowed.
 		allowSubversionOrThrow(player, residentsNation, targetTown);
 
@@ -60,7 +61,7 @@ public class PeacefullySubvertTown {
 	 * @param subvertingNation the nation doing the subverting
 	 * @param targetTown the target town
 	 */
-	private static void subvertTown(Nation subvertingNation, Town targetTown) {
+	private static void subvertTown(@Nullable Nation subvertingNation, Town targetTown) {
 		/*
 		 * Messaging
 		 * This section is here rather than the customary bottom of the method

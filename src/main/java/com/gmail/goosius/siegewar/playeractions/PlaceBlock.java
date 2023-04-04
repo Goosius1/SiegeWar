@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.playeractions;
 
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownOccupationUtil;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -31,6 +32,8 @@ import org.bukkit.Tag;
 import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Set;
@@ -124,10 +127,10 @@ public class PlaceBlock {
 		if (!TownyAPI.getInstance().isWilderness(block))
 			return false;
 
-		//Ensure the player has a town
+		//Ensure the player is a resident
 		Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
-		if (resident == null || !resident.hasTown())
-			throw new TownyException(translator.of("msg_err_siege_war_action_not_a_town_member"));
+		if (resident == null )
+			throw new TownyException(translator.of("msg_err_not_registered_1"));
 
 		//Get resident's town and possibly their nation
 		Town residentsTown = resident.getTownOrNull();
@@ -167,8 +170,8 @@ public class PlaceBlock {
 		 * @param nearbyTown the nearby town
          */
 	private static void evaluatePlaceWhiteBannerNearTown(Player player,
-														 Town residentsTown,
-														 Nation residentsNation,
+														 @Nullable Town residentsTown,
+														 @Nullable Nation residentsNation,
 														 Town nearbyTown) throws TownyException {
 		final Translator translator = Translator.locale(player);
 		//Ensure that there is a siege
@@ -187,7 +190,7 @@ public class PlaceBlock {
 		if (residentsNation != null && residentsNation == siege.getAttacker()) {
 			//Member of attacking nation
 			AbandonAttack.processAbandonAttackRequest(player, siege);
-		} else if (residentsTown == nearbyTown) {
+		} else if (residentsTown != null && residentsTown == nearbyTown) {
 			//Member of defending town
 			SurrenderDefence.processSurrenderDefenceRequest(player, siege);
 		} else {
@@ -211,8 +214,8 @@ public class PlaceBlock {
 	 * @param bannerBlock the banner block
 	 */
 	public static void evaluatePlaceColouredBannerNearTown(Player player,
-														   Town residentsTown,
-														   Nation residentsNation,
+														   @Nullable Town residentsTown,
+														   @Nullable Nation residentsNation,
 														   TownBlock nearbyTownBlock,
 														   Town nearbyTown,
 														   Block bannerBlock) throws TownyException {
@@ -291,13 +294,10 @@ public class PlaceBlock {
 	 * @throws TownyException when the chest is not allowed to be placed.
 	 */
 	private static void evaluatePlaceChest(Player player, Block block) throws TownyException {
+		final Translator translator = Translator.locale(player);
+
 		if (!SiegeWarSettings.getWarSiegePlunderEnabled() || !TownyAPI.getInstance().isWilderness(block))
 			return;
-		
-		final Translator translator = Translator.locale(player);
-		
-		if(!TownyEconomyHandler.isActive())
-			throw new TownyException(translator.of("msg_err_siege_war_cannot_plunder_without_economy"));
 
 		Set<Siege> adjacentSieges = SiegeWarBlockUtil.getAllAdjacentSieges(block);
 		
