@@ -127,12 +127,8 @@ public class SiegeWarTownPeacefulnessUtil {
 				if (town.isRuined())
 					continue;
 
-				//Skip if town is peaceful
-				if(TownMetaDataController.getPeacefulness(town))
-					continue;
-
-				//Skip if town has no natural or occupying nation
-				if(!town.hasNation() && !SiegeWarTownOccupationUtil.isTownOccupied(town))
+				//Skip if town has no nation
+				if(!town.hasNation())
 					continue;
 
 				//Skip if town is besieged
